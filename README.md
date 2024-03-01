@@ -15,11 +15,26 @@
 ├── models # 模型文件，本地调试时将模型全放在此文件夹中
 ├── requirements.txt 相关版本信息
 └── README.md # 本文件
-
-
-## 运行流程
-
 ```
-. 
+
+# 使用模型
+
+1、Qwen-7B-Chat
+
+使用官方线上模型，下载地址略；
+
+2、gte-large-zh
+
+下载地址：[thenlper/gte-large-zh · Hugging Face](https://huggingface.co/thenlper/gte-large-zh)
+
+3、bge-large-zh
+
+下载地址：[BAAI/bge-large-zh · Hugging Face](https://huggingface.co/BAAI/bge-large-zh)
+
+4、bge-reranker-large
+
+下载地址：[BAAI/bge-reranker-large · Hugging Face](https://huggingface.co/BAAI/bge-reranker-large)
+
+# 运行流程及结果
 运行src/runsanti.py，得到测试santi.json的结果如图
 ![596b704a6b24bfb3ededed02be14acb](https://github.com/1IsMaple/TriBodyQA-LLM/assets/137876510/592db9ac-be00-4578-bbd2-d052b4ce295c)
