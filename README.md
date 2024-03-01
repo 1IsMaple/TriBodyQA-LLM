@@ -12,7 +12,7 @@
 │   ├── runsanti.py # 主函数入口
 │   ├── santi.json # 调试代码用
 │   └── qwen_generation_utils.py # qwen工具，直接从qwen开源代码中复制来，主要为了构建qwen的batch推理输入形式
-├── models # 模型文件，本地调试时将模型全放在此文件夹中
+├── models # 模型文件，因大小未上传，下载地址如下，本地调试时将模型全放在此文件夹中
 ├── requirements.txt 相关版本信息
 └── README.md # 本文件
 ```
