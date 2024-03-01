@@ -17,11 +17,15 @@
 └── README.md # 本文件
 ```
 
+# 运行流程及结果
+运行src/runsanti.py，得到测试santi.json的结果如图
+![596b704a6b24bfb3ededed02be14acb](https://github.com/1IsMaple/TriBodyQA-LLM/assets/137876510/592db9ac-be00-4578-bbd2-d052b4ce295c)
+
 # 使用模型
 
 1、Qwen-7B-Chat
 
-使用官方线上模型，下载地址略；
+使用官方线上模型
 
 2、gte-large-zh
 
@@ -35,6 +39,17 @@
 
 下载地址：[BAAI/bge-reranker-large · Hugging Face](https://huggingface.co/BAAI/bge-reranker-large)
 
-# 运行流程及结果
-运行src/runsanti.py，得到测试santi.json的结果如图
-![596b704a6b24bfb3ededed02be14acb](https://github.com/1IsMaple/TriBodyQA-LLM/assets/137876510/592db9ac-be00-4578-bbd2-d052b4ce295c)
+
+# 主要流程
+
+1.加载LLM、加载embedding模型、加载reranker模型
+
+2.向量知识库构建、BM25知识库构建
+
+3.多路召回与排序，包括bm25召回、bge召回、gte召回，然后使用bge-reranker进行精排，选取得分最高的top-3与问题同时作为输入到llm的上下文。并使用jieba分词对于问题进行分词，加入一层关键词判断，提高匹配精度，同时可根据关键词判断是否有答案。
+
+# 优点
+
+使用vllm并且根据Qwen官方脚本完成batch推理，推理速度有较大提升
+使用了bm25召回、bge召回、gte召回进行多路召回，并使用bge-reranker进行精排，选取top-3作为llm的输入。
+进行召回时将question复制三倍，使得question长度与召回文档长度不会相差太多，有利于提升召回效果
