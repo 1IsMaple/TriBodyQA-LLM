@@ -81,7 +81,7 @@ llm = LLMPredictor(model_path=model, is_chatglm=False, device='cuda:0')
 #加载用于重新排序的模型和相应的分词器，并将模型设置为评估模式（eval），使用半精度浮点数（half）进行计算，并将模型移动到 GPU 上。
 rerank_tokenizer = AutoTokenizer.from_pretrained(reranker_model_path)
 rerank_model = AutoModelForSequenceClassification.from_pretrained(reranker_model_path)
-rerank_model.eval()  #eval() 方法将模型设置为评估模式，这意味着在推理时不会进行梯度计算。
+rerank_model.eval()  #eval() 方法将模型设置为评估模式，在推理时不会进行梯度计算。
 rerank_model.half()  #half() 方法将模型参数转换为半精度浮点数，以减少内存占用和加速计算。
 rerank_model.cuda()  #cuda() 方法将模型移动到 GPU 上进行加速计算。
 ###############################################################################################################################################################################
@@ -127,7 +127,7 @@ BM25 = BM25Model(corpus)
 
 ###############################################################################################################################################################################
 result_list = []
-test_file = "../data/santiQ.json"
+test_file = "../data/santi.json"
 with open(test_file, 'r', encoding='utf-8') as f:
     result = json.load(f)
 
