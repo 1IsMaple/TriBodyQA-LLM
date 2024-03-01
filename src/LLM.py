@@ -1,11 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, AutoModel, GenerationConfig
-# from transformers import BitsAndBytesConfig
 import torch
 from vllm import LLM
-# from peft import PeftModel
-# from langchain.schema.embeddings import Embeddings
-# from typing import List
-# import bitsandbytes as bnb
 import warnings
 
 
