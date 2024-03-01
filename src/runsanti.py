@@ -15,7 +15,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from qwen_generation_utils import make_context, decode_tokens, get_stop_words_ids
 
 
-####对文档进行重新排序（rerank）的功能。[重点难理解]####
+####对文档进行重新排序（rerank）的功能。####
 def rerank(docs, query, rerank_tokenizer, rerank_model, k=5):
     #将 docs 中的文档内容提取出来，存储在 docs_ 列表中。
     docs_ = []
@@ -75,9 +75,9 @@ embedding_path2 = "../models/bge-large-zh"
 #reranker_model_path 变量指定了重新排序模型的路径。
 reranker_model_path = "../models/bge-reranker-large" 
 
-llm = LLMPredictor(model_path=model, is_chatglm=False, device='cuda:0') # , temperature = 0.5; temperature=1.0, top_p=0.5
+llm = LLMPredictor(model_path=model, is_chatglm=False, device='cuda:0') 
 # llm.model.config.use_flash_attn = True
-###############################################################################################################################################################################
+
 #加载用于重新排序的模型和相应的分词器，并将模型设置为评估模式（eval），使用半精度浮点数（half）进行计算，并将模型移动到 GPU 上。
 rerank_tokenizer = AutoTokenizer.from_pretrained(reranker_model_path)
 rerank_model = AutoModelForSequenceClassification.from_pretrained(reranker_model_path)
@@ -89,13 +89,14 @@ rerank_model.cuda()  #cuda() 方法将模型移动到 GPU 上进行加速计算�
 from langchain.document_loaders import TextLoader
 from langchain.text_splitter import CharacterTextSplitter, RecursiveCharacterTextSplitter
 
-###############################################################################################################################################################################
+
 tokenizer = AutoTokenizer.from_pretrained(model,trust_remote_code=True)
 
 def get_token_len(text: str) -> int:
 
     tokens = tokenizer.encode(text)
     return len(tokens)
+
 # 1. 从文件读取本地数据集
 loader1 = TextLoader("../data/三体1疯狂年代.txt",encoding='gbk')
 documents1 = loader1.load()
@@ -114,7 +115,6 @@ corpus = [item.page_content for item in docs]
 print(docs[0:2])
 
 
-###############################################################################################################################################################################
 # embedding database创建了两个嵌入模型 BGEpeftEmbedding，并使用它们来构建两个嵌入数据库 db 和 db2，然后基于语料库 corpus 构建了一个 BM25 模型 BM25。
 embedding_model = BGEpeftEmbedding(model_path=embedding_path)
 db = FAISS.from_documents(docs, embedding_model)
@@ -130,7 +130,7 @@ result_list = []
 test_file = "../data/santiQ.json"
 with open(test_file, 'r', encoding='utf-8') as f:
     result = json.load(f)
-###############################################################################################################################################################################
+
 #prompts[x]是控制batch推理用的，all_prompts[x]是给res3用的，来判断关键词在不在里面，ress[x]用于存结果
 prompts1, prompts2, prompts3 = [], [], []
 all_prompts0,all_prompts1  = [],[]
@@ -160,7 +160,7 @@ for i, line in tqdm(enumerate(result)):
         ress1.extend(infer_by_batch(prompts1, llm))
         prompts1 = []
 
-###############################################################################################################################################################################
+
 if len(prompts1)>0:
     ress1.extend(infer_by_batch(prompts1, llm))
 
