@@ -1,6 +1,3 @@
-
-
-###############################################################################################################################################################################
 import json
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -100,11 +97,11 @@ def get_token_len(text: str) -> int:
     tokens = tokenizer.encode(text)
     return len(tokens)
 # 1. 从文件读取本地数据集
-loader1 = TextLoader("三体1疯狂年代.txt",encoding='gbk')
+loader1 = TextLoader("../data/三体1疯狂年代.txt",encoding='gbk')
 documents1 = loader1.load()
-loader2 = TextLoader("三体2黑暗森林.txt",encoding='gbk')
+loader2 = TextLoader("../data/三体2黑暗森林.txt",encoding='gbk')
 documents2 = loader2.load()
-loader3 = TextLoader("三体3死神永生.txt",encoding='gbk')
+loader3 = TextLoader("../data/三体3死神永生.txt",encoding='gbk')
 documents3 = loader3.load()
 
 documents=documents1+documents2+documents3
@@ -130,7 +127,7 @@ BM25 = BM25Model(corpus)
 
 ###############################################################################################################################################################################
 result_list = []
-test_file = "santiQ.json"
+test_file = "../data/santiQ.json"
 with open(test_file, 'r', encoding='utf-8') as f:
     result = json.load(f)
 ###############################################################################################################################################################################
