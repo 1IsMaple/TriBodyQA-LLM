@@ -146,10 +146,13 @@ for i, line in tqdm(enumerate(result)):
     # rerank，使用重新排名模型 rerank 对检索结果进行重新排序。
     search_docs4 = rerank(search_docs1 + search_docs2 + search_docs3, line['question'], rerank_tokenizer, rerank_model, k=num_input_docs)
 
-    #prompt1用reranker召回的前4个文档合并起来作为上下文提示，prompt2直接用bm25召回的前4文档合并起来作为上下文提示生成prompt
+    #prompt用reranker召回的前4个文档合并起来作为上下文提示
     prompt1 = llm.get_prompt("\n".join(search_docs4[::-1]), line['question'], bm25=True)
     #prompt2 = llm.get_prompt("\n".join(search_docs1[:num_input_docs][::-1]), line['question'], bm25=True)
     prompts1.append(prompt1)
+    
+    #prompt2直接用bm25召回的前4文档合并起来作为上下文提示生成prompt
+    #prompt2 = llm.get_prompt("\n".join(search_docs1[:num_input_docs][::-1]), line['question'], bm25=True)
     #prompts2.append(prompt2)
 
     #all_prompts0是使用bm25召回3个结果合并作为提示，all_prompts1是使用rerank的1个结果和bm25召回2个结果合并作为提示，
