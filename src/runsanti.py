@@ -148,7 +148,6 @@ for i, line in tqdm(enumerate(result)):
 
     #prompt用reranker召回的前4个文档合并起来作为上下文提示
     prompt1 = llm.get_prompt("\n".join(search_docs4[::-1]), line['question'], bm25=True)
-    #prompt2 = llm.get_prompt("\n".join(search_docs1[:num_input_docs][::-1]), line['question'], bm25=True)
     prompts1.append(prompt1)
     
     #prompt2直接用bm25召回的前4文档合并起来作为上下文提示生成prompt
